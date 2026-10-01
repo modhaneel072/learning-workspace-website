@@ -23,7 +23,7 @@ const PRACTICE = [
 
 function Arrow() {
   return (
-    <svg className={styles.arrow} viewBox="0 0 40 16" aria-hidden="true" data-reveal="">
+    <svg className={styles.arrow} viewBox="0 0 40 16" aria-hidden="true" data-reveal="draw">
       <path d="M2 8h34M30 2l6 6-6 6" />
     </svg>
   );
@@ -69,7 +69,7 @@ export function PracticeSection() {
 
             <Arrow />
 
-            <div className={`${styles.column} ${styles.pattern}`} data-reveal="">
+            <div className={`${styles.column} ${styles.pattern}`} data-reveal="fill">
               <h3 className={styles.columnTitle}>The pattern</h3>
               <p className={styles.patternName}>Distributing a negative sign</p>
               <p className={styles.patternBody}>
