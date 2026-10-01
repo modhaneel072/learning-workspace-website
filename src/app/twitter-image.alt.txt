@@ -1,0 +1,1 @@
+Learning Workspace canvas: a handwritten calculus solution with the sign error in step 4 highlighted and the hint “What does negative × negative give?”
