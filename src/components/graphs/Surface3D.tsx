@@ -131,18 +131,21 @@ export function Surface3D() {
   return (
     <div className={styles.surfaceWrap} ref={wrapRef}>
       <div className={styles.surfaceStage}>
-        {/* eslint-disable-next-line @next/next/no-img-element -- static SVG from our own route; nothing to optimise */}
-        <img
-          src={asset("/graphs/surface.svg")}
-          width={SURFACE_VIEW.width}
-          height={SURFACE_VIEW.height}
-          alt={drawn ? "" : ALT}
-          aria-hidden={drawn || undefined}
-          loading="lazy"
-          decoding="async"
-          className={styles.surfaceImage}
-          style={drawn ? { visibility: "hidden" } : undefined}
-        />
+        <picture>
+          {/* Phones get the same figure with labels sized for a half-width render. */}
+          <source media="(max-width: 600px)" srcSet={asset("/graphs/surface-compact.svg")} />
+          <img
+            src={asset("/graphs/surface.svg")}
+            width={SURFACE_VIEW.width}
+            height={SURFACE_VIEW.height}
+            alt={drawn ? "" : ALT}
+            aria-hidden={drawn || undefined}
+            loading="lazy"
+            decoding="async"
+            className={styles.surfaceImage}
+            style={drawn ? { visibility: "hidden" } : undefined}
+          />
+        </picture>
         {interactive ? (
           <canvas
             ref={canvasRef}

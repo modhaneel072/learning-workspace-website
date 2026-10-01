@@ -52,7 +52,7 @@ export function Graph2D() {
           <circle key={x} cx={f1(X(x))} cy={f1(Y(curveF(x)))} r="4.2" />
         ))}
       </g>
-      <g fill="#6a7771" fontSize="16" fontFamily="inherit">
+      <g fill="#6a7771" fontSize="16" fontFamily="inherit" className="graph-ticks">
         {[0, 1, 2].map((y) => (
           <text key={y} x={P.left - 14} y={f1(Y(y) + 5)} textAnchor="end">
             {y}
@@ -64,8 +64,8 @@ export function Graph2D() {
           </text>
         ))}
       </g>
-      <g fill="#4f6a57" fontSize="19" fontWeight="600" fontFamily="inherit">
-        <text x={P.right + 24} y={P.bottom + 6}>
+      <g fill="#4f6a57" fontSize="19" fontWeight="600" fontFamily="inherit" className="graph-labels">
+        <text x={P.right + 20} y={P.bottom + 6}>
           x
         </text>
         <text x={P.left - 4} y={P.top - 24} textAnchor="middle">

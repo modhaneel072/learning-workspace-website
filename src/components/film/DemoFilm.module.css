@@ -12,6 +12,9 @@
 
 .player {
   position: relative;
+  /* Never taller than the screen below the header, so the controls stay visible. */
+  width: min(100%, calc((100svh - var(--header-h) - 48px) * 16 / 9));
+  margin-inline: auto;
   overflow: hidden;
   border-radius: clamp(14px, 1.8vw, 24px);
   background: #121816;

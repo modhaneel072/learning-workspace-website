@@ -63,7 +63,7 @@ export function drawSurface(ctx: CanvasRenderingContext2D, azimuth: number, elev
   ctx.fillStyle = S.label;
   for (const axis of scene.axes) {
     const dx = axis.label === "z" ? -6 : 10;
-    const dy = axis.label === "z" ? -10 : axis.label === "x" ? 18 : -6;
+    const dy = axis.label === "z" ? -10 : axis.label === "x" ? 18 : 4;
     ctx.textAlign = "left";
     ctx.fillText(axis.label, axis.to[0] + dx, axis.to[1] + dy);
   }

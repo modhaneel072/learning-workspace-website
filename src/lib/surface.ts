@@ -36,7 +36,7 @@ function basis(azimuthDeg: number, elevationDeg: number) {
 const FIT = (() => {
   const { right, up } = basis(DEFAULT_AZIMUTH, DEFAULT_ELEVATION);
   const probes: Vec3[] = [
-    [-1.14, -1.14, 0], [1.2, -1.14, 0], [-1.14, 1.2, 0], [-1.14, -1.14, 2.95],
+    [-1.14, -1.14, 0], [1.2, -1.14, 0], [1.14, 1.2, 0], [-1.14, 1.2, 0], [-1.14, -1.14, 2.95],
     [1, 1, Math.E], [-1, 1, Math.E], [1, -1, 1 / Math.E], [1, 1, 0], [-1, -1, 1 / Math.E],
   ];
   const xs = probes.map((p) => dot(sub(p, TARGET), right));
@@ -108,11 +108,14 @@ export function surfaceFaces(project: (p: Vec3) => Projected, n: number, gridEve
   return faces.sort((p, q) => q.depth - p.depth);
 }
 
-export const AXIS_CORNER: Vec3 = [-1.14, -1.14, 0];
-export const AXES: { end: Vec3; label: string }[] = [
-  { end: [1.2, -1.14, 0], label: "x" },
-  { end: [-1.14, 1.2, 0], label: "y" },
-  { end: [-1.14, -1.14, 2.95], label: "z" },
+/**
+ * Axes run along edges of the base square that the default camera can see:
+ * x along the front edge, y along the front-right edge, z up the front-left corner.
+ */
+export const AXES: { from: Vec3; to: Vec3; label: string }[] = [
+  { from: [-1.14, -1.14, 0], to: [1.2, -1.14, 0], label: "x" },
+  { from: [1.14, -1.14, 0], to: [1.14, 1.2, 0], label: "y" },
+  { from: [-1.14, -1.14, 0], to: [-1.14, -1.14, 2.95], label: "z" },
 ];
 
 /** Base grid in the z = 0 plane. */
@@ -182,12 +185,11 @@ export function buildScene(azimuth = DEFAULT_AZIMUTH, elevation = DEFAULT_ELEVAT
   }
   if (run.length > 1 && runVisible !== null) (runVisible ? slice : sliceHidden).push(run);
 
-  const corner = project(AXIS_CORNER);
-  const axes = AXES.map((axis) => ({ from: corner, to: project(axis.end), label: axis.label }));
+  const axes = AXES.map((axis) => ({ from: project(axis.from), to: project(axis.to), label: axis.label }));
   const ticks: Scene["ticks"] = [];
   for (const z of [0, 1, 2]) ticks.push({ at: project([-1.14, -1.14, z]), text: String(z), dx: -10, dy: 5, anchor: "end" });
   for (const v of [-1, 0, 1]) ticks.push({ at: project([v, -1.14, 0]), text: v < 0 ? "−1" : String(v), dx: 0, dy: 20, anchor: "middle" });
-  ticks.push({ at: project([-1.14, 1, 0]), text: "1", dx: -10, dy: -4, anchor: "end" });
+  for (const v of [0, 1]) ticks.push({ at: project([1.14, v, 0]), text: String(v), dx: 10, dy: 12, anchor: "start" });
   return { faces, slice, sliceHidden, grid: baseGrid(project), axes, ticks };
 }
 

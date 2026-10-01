@@ -1,0 +1,29 @@
+.main {
+  display: grid;
+  align-content: center;
+  min-height: calc(100svh - var(--header-h) - 180px);
+  padding-block: clamp(64px, 10vw, 128px);
+}
+
+.main :global(.container) {
+  display: grid;
+  justify-items: start;
+  gap: 20px;
+}
+
+.code {
+  color: var(--sage-ink);
+  font-size: var(--step-1);
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+.title {
+  font-size: var(--step-4);
+}
+
+.body {
+  max-width: 46ch;
+  margin-bottom: 8px;
+  color: var(--ink-2);
+}

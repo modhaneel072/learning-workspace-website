@@ -44,6 +44,7 @@ export function InteractivePreview() {
   const started = useRef(false);
   const reduced = useRef(false);
   const listRef = useRef<HTMLOListElement>(null);
+  const frameRef = useRef<HTMLDivElement>(null);
   const modeRef = useRef<Mode>("rail");
   const replaying = useRef<{ active: boolean; scrollY: number }>({ active: false, scrollY: 0 });
   const [mode, setMode] = useState<Mode>("rail");
@@ -395,10 +396,16 @@ export function InteractivePreview() {
     started.current = true;
     autoPaused.current = false;
     const times = stageTimes.current;
+    // Bring the canvas into view when it sits below the step buttons (tablets in portrait).
+    const frame = frameRef.current;
+    if (frame && frame.getBoundingClientRect().bottom > window.innerHeight) {
+      frame.scrollIntoView({ block: "nearest", behavior: reduced.current ? "auto" : "smooth" });
+    }
     if (reduced.current) {
-      // Show the finished state of that stage without animating.
+      // Show the finished state of that stage without animating. Events must fire
+      // (suppressEvents=false) so the ink, rail and step state are redrawn.
       const stop = times[index + 1] !== undefined ? times[index + 1] - 0.01 : tl.duration();
-      tl.pause(stop);
+      tl.pause(stop, false);
       userPaused.current = true;
       setPlaying(false);
       return;
@@ -480,7 +487,7 @@ export function InteractivePreview() {
           </div>
         </div>
 
-        <div className={st.frame}>
+        <div className={st.frame} ref={frameRef}>
           <div
             className={s.screen}
             role="img"

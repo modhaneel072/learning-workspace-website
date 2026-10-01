@@ -42,6 +42,17 @@
   font-family: var(--font-sans);
 }
 
+/* The graph renders at about half its 640-unit width on phones; keep labels near 13px and up. */
+@media (max-width: 600px) {
+  .plot :global(.graph-ticks) {
+    font-size: 27px;
+  }
+
+  .plot :global(.graph-labels) {
+    font-size: 31px;
+  }
+}
+
 .surfaceWrap {
   display: grid;
   gap: 14px;

@@ -9,6 +9,7 @@ const clock = (seconds: number) => `${Math.floor(seconds / 60)}:${String(Math.fl
 
 export function DemoFilm() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const playerRef = useRef<HTMLDivElement>(null);
   const [started, setStarted] = useState(false);
   const [failed, setFailed] = useState(false);
 
@@ -20,10 +21,17 @@ export function DemoFilm() {
     video.play().catch(() => {
       // Playback was refused; leave the native controls available.
     });
+    // The play button disappears once the film starts; keep keyboard focus on the player.
+    requestAnimationFrame(() => video.focus({ preventScroll: true }));
   };
 
   useEffect(() => {
-    const onRequest = () => play();
+    const onRequest = () => {
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      playerRef.current?.scrollIntoView({ block: "center", behavior: reduce ? "auto" : "smooth" });
+      if (location.hash !== "#film") history.pushState(null, "", "#film");
+      play();
+    };
     window.addEventListener(PLAY_FILM_EVENT, onRequest);
     return () => window.removeEventListener(PLAY_FILM_EVENT, onRequest);
   }, []);
@@ -41,7 +49,7 @@ export function DemoFilm() {
           </p>
         </div>
 
-        <div className={styles.player} data-started={started || undefined}>
+        <div className={styles.player} data-started={started || undefined} ref={playerRef}>
           <video
             ref={videoRef}
             className={styles.video}

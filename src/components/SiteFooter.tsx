@@ -1,4 +1,4 @@
-import { NAV_LINKS, SITE_NAME } from "@/lib/site";
+import { NAV_LINKS, SITE_NAME, home } from "@/lib/site";
 import { LogoMark } from "./header/LogoMark";
 import styles from "./SiteFooter.module.css";
 
@@ -7,7 +7,7 @@ export function SiteFooter() {
     <footer className={styles.footer}>
       <div className={`container ${styles.inner}`}>
         <div className={styles.brandBlock}>
-          <a href="#top" className={styles.brand}>
+          <a href={home("#top")} className={styles.brand}>
             <LogoMark size={24} />
             <span translate="no">{SITE_NAME}</span>
           </a>
@@ -17,11 +17,11 @@ export function SiteFooter() {
           <ul className={styles.links}>
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
-                <a href={link.href}>{link.label}</a>
+                <a href={home(link.href)}>{link.label}</a>
               </li>
             ))}
             <li>
-              <a href="#early-access">Early access</a>
+              <a href={home("#early-access")}>Early access</a>
             </li>
           </ul>
         </nav>

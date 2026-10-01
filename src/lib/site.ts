@@ -9,6 +9,9 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || `http://localhost:3
 /** Prefix a file from /public with the base path. Next.js does this for its own links, not for raw src/href strings. */
 export const asset = (path: string) => `${BASE_PATH}${path}`;
 
+/** Link to a section of the home page, e.g. home("#film"). On the home page itself this scrolls in place. */
+export const home = (hash = "") => `${BASE_PATH}/${hash}`;
+
 export const SITE_DESCRIPTION =
   "Learning Workspace is an intelligent notebook and whiteboard for students. It follows your handwritten math, points to the step where your reasoning slips, and builds practice around the ideas you need.";
 

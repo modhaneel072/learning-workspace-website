@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { NAV_LINKS, SITE_NAME } from "@/lib/site";
+import { NAV_LINKS, SITE_NAME, home } from "@/lib/site";
 import { LogoMark } from "./LogoMark";
 import styles from "./SiteHeader.module.css";
 
@@ -32,7 +32,7 @@ export function SiteHeader() {
   return (
     <header className={styles.header} data-open={open || undefined}>
       <div className={`container ${styles.bar}`}>
-        <a href="#top" className={styles.brand} onClick={close}>
+        <a href={home("#top")} className={styles.brand} onClick={close}>
           <LogoMark />
           <span translate="no">{SITE_NAME}</span>
         </a>
@@ -41,13 +41,13 @@ export function SiteHeader() {
           <ul>
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
-                <a href={link.href}>{link.label}</a>
+                <a href={home(link.href)}>{link.label}</a>
               </li>
             ))}
           </ul>
         </nav>
 
-        <a href="#early-access" className={`btn btn-primary ${styles.cta}`}>
+        <a href={home("#early-access")} className={`btn btn-primary ${styles.cta}`}>
           Get early access
         </a>
 
@@ -69,13 +69,13 @@ export function SiteHeader() {
           <ul>
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
-                <a href={link.href} onClick={close}>
+                <a href={home(link.href)} onClick={close}>
                   {link.label}
                 </a>
               </li>
             ))}
           </ul>
-          <a href="#early-access" className="btn btn-primary" onClick={close}>
+          <a href={home("#early-access")} className="btn btn-primary" onClick={close}>
             Get early access
           </a>
         </nav>

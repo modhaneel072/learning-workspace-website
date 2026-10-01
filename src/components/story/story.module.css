@@ -127,6 +127,7 @@
 
 .previewLabel {
   display: inline-flex;
+  white-space: nowrap;
   align-items: center;
   gap: 8px;
   color: var(--ink-2);
@@ -270,7 +271,17 @@
   }
 
   .control {
-    padding: 0 13px;
+    gap: 6px;
+    padding: 0 12px;
+    font-size: 0.875rem;
+  }
+
+  .controls {
+    gap: 6px;
+  }
+
+  .previewLabel {
+    font-size: 0.875rem;
   }
 }
 
@@ -312,17 +323,27 @@
   .railItem {
     min-height: 68vh;
     align-content: center;
-    opacity: 0.32;
-    transition: opacity 0.4s ease;
+  }
+
+  /* Inactive steps recede through colour, which keeps every step above WCAG contrast. */
+  .railItem:not([data-active]) .railTitle {
+    color: #7d8983;
+  }
+
+  .railItem:not([data-active]) .railBody {
+    color: var(--muted);
+  }
+
+  .railItem:not([data-active]) .railNumber {
+    border-color: var(--line-strong);
+    background: transparent;
+    color: var(--muted);
   }
 
   .railItem:first-child {
     min-height: 88vh;
   }
 
-  .railItem[data-active] {
-    opacity: 1;
-  }
 
   .railButton {
     gap: 18px;
@@ -350,6 +371,11 @@
     max-width: 30ch;
     font-size: var(--step-1);
     line-height: 1.55;
+    transition: color 0.4s ease;
+  }
+
+  .railItem[data-active] .railBody {
+    color: var(--ink-2);
   }
 
   .railBar {
@@ -373,7 +399,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .railItem {
+  .railBody {
     transition: none;
   }
 }
